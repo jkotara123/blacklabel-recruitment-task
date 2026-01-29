@@ -25,7 +25,7 @@ Przygotuj **maksymalnie 3** wykresy.
 
 
 ## Opis rozwiązania
-W Pull Requestcie dodaj opis, w którym wyjaśnisz:
+W pliku README dodaj opis, w którym wyjaśnisz:
 - jakie dane uznałeś/aś za kluczowe,
 - dlaczego wybrałeś/aś właśnie takie wizualizacje (typy wykresów).
 
@@ -38,7 +38,7 @@ W Pull Requestcie dodaj opis, w którym wyjaśnisz:
 
 
 ## Uruchomienie projektu
-W Pull Requestcie opisz wymagania (np. Node, Python, serwer lokalny) i kroki przydatne dla nas do uruchomienia Twojego projektu.
+W pliku README opisz także wymagania (np. Node, Python, serwer lokalny) i kroki przydatne dla nas do uruchomienia Twojego projektu.
 Projekt powinien być **łatwy do uruchomienia lokalnie** bez dodatkowych wyjaśnień.
 
 
@@ -55,6 +55,9 @@ Przewidujemy, że wykonanie zadania powinno zająć maksymalnie kilka godzin.
 Na rozwiazanie masz dokładnie 7 dni licząc od daty otrzymania tego zadania (otrzymania na maila zaproszenia do repozytorium).
 
 
-## Jak wysłać rozwiązanie
-Gotowe rozwiązanie wyślij w formie Pull Requesta w tym repozytorium i oznacz do review jako "Reviewers": raf18seb, karolkolodziej, ddragula.
-Repozytorium jest prywatne.
+## Jak zacząć i wysłać rozwiązanie
+- wykonaj fork tego repozytorium na swoje konto GitHub,
+- upewnij się, że wszystkie zmiany są wypchnięte do Twojego repozytorium na GitHubie,
+- wyślij link do swojego repozytorium zawierającego rozwiązanie na adres e-mail: [TU WPISZ ADRES E-MAIL].
+
+Nie wysyłaj Pull Requesta do tego repozytorium - oceniany będzie wyłącznie kod w Twoim forku.
