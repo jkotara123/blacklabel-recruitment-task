@@ -1,11 +1,11 @@
 export type OrderData = {
   meta: {
-    currency: string,
-    generatedAt: string,
-    source: string,
-  },
-  orders: Order[]
-}
+    currency: string;
+    generatedAt: string;
+    source: string;
+  };
+  orders: Order[];
+};
 
 export type CustomerType = "new" | "returning";
 
@@ -24,5 +24,5 @@ export type Order = {
   paymentMethod: string;
   customerType: CustomerType;
   device: string;
-  deliveryDays: 2;
+  deliveryDays: number;
 };

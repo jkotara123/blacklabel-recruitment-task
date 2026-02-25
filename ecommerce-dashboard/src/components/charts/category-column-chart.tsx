@@ -1,102 +1,47 @@
-
-import type{ CategoryColumnChartData} from "../../types/chart.types";
-import type { Order, OrderData } from "../../types/data.types";
-import data from "../../data/data.json" 
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import "highcharts/modules/drilldown";
+import useFilteredData from "../../data/useFilteredData";
+import { transformByCategoryDrilldown } from "../../utils/data-transformers/transformer-category-drilldown";
+import type { TimeRange } from "../../types/chart.types";
+import type { Order } from "../../types/data.types";
 
-function prepareDrilldownData(orders: Order[]): CategoryColumnChartData {
-  const categories: CategoryColumnChartData = {};
-
-  orders.forEach(order => {
-    const revenue = order.quantity * order.unitPrice;
-    const { category, subcategory } = order;
-
-    if (!categories[category]) {
-      categories[category] = {
-        revenue: 0,
-        orders: 0,
-        itemsOrdered: 0,
-        subcategories: {}
-      };
-    }
-
-    categories[category].revenue += revenue;
-    categories[category].orders += 1;
-    categories[category].itemsOrdered += order.quantity;
-
-    if (!categories[category].subcategories[subcategory]) {
-      categories[category].subcategories[subcategory] = {
-        revenue: 0,
-        orders: 0,
-        itemsOrdered: 0
-      };
-    }
-
-    const sub = categories[category].subcategories[subcategory];
-    sub.revenue += revenue;
-    sub.orders += 1;
-    sub.itemsOrdered += order.quantity;
-  });
-
-  return categories;
-}
-
-function buildHighchartsSeries(categories: CategoryColumnChartData) {
-  const mainSeries: Highcharts.PointOptionsObject[] = [];
-  const drilldownSeries: any[] = [];
-
-  Object.entries(categories).forEach(([category, data]) => {
-    mainSeries.push({
-      name: category,
-      y: data.revenue,
-      drilldown: category,
-    });
-
-    drilldownSeries.push({
-      id: category,
-      name: `${category} subcategories`,
-      type: 'column',
-      data: Object.entries(data.subcategories).map(([sub, subData]) => [
-        sub,
-        subData.revenue
-      ])
-    });
-  });
-
-  return { mainSeries, drilldownSeries };
-}
-
-export default function CategoryColumnChart() {
-  const categories = prepareDrilldownData((data as OrderData).orders);
-  const { mainSeries, drilldownSeries } = buildHighchartsSeries(categories);
+export default function CategoryDrilldownChart({
+  orders,
+  timeRange,
+}: {
+  orders: Order[];
+  timeRange: TimeRange;
+}) {
+  const filteredOrders = useFilteredData(orders, timeRange);
+  const { mainSeries, drilldownSeries } =
+    transformByCategoryDrilldown(filteredOrders);
 
   const options: Highcharts.Options = {
     chart: { type: "column" },
-    title: { text: "Revenue by Category" },
+    title: { text: `Revenue by Category` },
     xAxis: { type: "category" },
-    yAxis: { title: { text: "Revenue" } },
-
-    tooltip: {
-      formatter: function () {
-        const point = this as any;
-        return `<b>${point.name}</b><br/>
-                Revenue: €${point.y.toFixed(2)}<br/>`;
-      }
+    yAxis: {
+      title: { text: "Revenue" },
     },
-
-    series: [
-      {
-        name: "Categories",
-        type: "column",
-        data: mainSeries
-      }
-    ],
-
+    legend: { enabled: false },
+    plotOptions: {
+      series: {
+        dataLabels: { enabled: true, format: "{point.y:.0f}" },
+      },
+    },
+    tooltip: {
+      useHTML: true,
+      pointFormat: `
+        Revenue: <b>{point.revenue:.2f} </b><br/>
+        Orders: <b>{point.totalOrders}</b><br/>
+        Items: <b>{point.totalItems}</b>
+      `,
+    },
+    series: [mainSeries],
     drilldown: {
-      series: drilldownSeries
-    }
+      series: drilldownSeries as Highcharts.SeriesOptionsType[],
+    },
   };
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
