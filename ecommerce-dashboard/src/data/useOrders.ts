@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { type OrderData } from "../types/data.types";
 
-export default function useOrders(fileName: string = "data.json") {
+export default function useOrderData(fileName: string = "data.json") {
   const [data, setData] = useState<OrderData | null>(null);
   const [loading, setLoading] = useState(true);
 

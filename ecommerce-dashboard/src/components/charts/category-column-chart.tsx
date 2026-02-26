@@ -8,9 +8,11 @@ import type { Order } from "../../types/data.types";
 
 export default function CategoryDrilldownChart({
   orders,
+  currency,
   timeRange,
 }: {
   orders: Order[];
+  currency: string;
   timeRange: TimeRange;
 }) {
   const filteredOrders = useFilteredData(orders, timeRange);
@@ -22,7 +24,7 @@ export default function CategoryDrilldownChart({
     title: { text: `Revenue by Category` },
     xAxis: { type: "category" },
     yAxis: {
-      title: { text: "Revenue" },
+      title: { text: `Revenue [${currency}]` },
     },
     legend: { enabled: false },
     plotOptions: {
@@ -33,7 +35,7 @@ export default function CategoryDrilldownChart({
     tooltip: {
       useHTML: true,
       pointFormat: `
-        Revenue: <b>{point.revenue:.2f} </b><br/>
+        Revenue: <b>{point.revenue:.2f} ${currency} </b><br/>
         Orders: <b>{point.totalOrders}</b><br/>
         Items: <b>{point.totalItems}</b>
       `,
@@ -44,5 +46,15 @@ export default function CategoryDrilldownChart({
     },
   };
 
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <div style={{ marginBottom: "20px", minHeight: "35px" }}>
+        <h3 style={{ margin: 0, fontSize: "16px" }}>Orders by Category</h3>
+      </div>
+
+      <div style={{ flex: 1 }}>
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      </div>
+    </div>
+  );
 }

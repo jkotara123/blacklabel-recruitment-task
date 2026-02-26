@@ -10,9 +10,11 @@ import type { Order } from "../../types/data.types";
 
 export default function DeliveryTimeBubbleMap({
   orders,
+  currency,
   timeRange,
 }: {
   orders: Order[];
+  currency: string;
   timeRange: TimeRange;
 }) {
   const [zoomLevel, setZoomLevel] = useState(3);
@@ -23,6 +25,7 @@ export default function DeliveryTimeBubbleMap({
   const options: Highcharts.Options = {
     chart: {
       map: worldMap,
+      margin: [60, 10, 20, 10],
       events: {
         redraw: function () {
           const chart = this as Highcharts.MapChart;
@@ -34,11 +37,12 @@ export default function DeliveryTimeBubbleMap({
     },
     mapView: {
       projection: { name: "WebMercator" },
-      center: [10, 50],
-      zoom: 3,
+      center: [10, 48],
+      zoom: 3.7,
       maxZoom: 5.5,
     },
     title: { text: "Global Orders Distribution" },
+    subtitle: { text: "Bubble Size - Number of Orders" },
     mapNavigation: {
       enabled: true,
       buttonOptions: { verticalAlign: "bottom" },
@@ -49,9 +53,10 @@ export default function DeliveryTimeBubbleMap({
         <b>{point.name}</b><br/>
         Avg. Delivery: <b>{point.avgDelivery:.1f} days</b><br/>
         Orders: <b>{point.totalOrders}</b><br/>
-        Revenue: <b>{point.revenue:.2f} PLN</b>
+        Revenue: <b>{point.revenue:.2f} ${currency}</b>
       `,
     },
+
     colorAxis: {
       min: 0,
       max: 10,
@@ -64,7 +69,18 @@ export default function DeliveryTimeBubbleMap({
         format: "{value} days",
       },
     },
-
+    legend: {
+      layout: "horizontal",
+      align: "center",
+      verticalAlign: "bottom",
+      title: {
+        text: "Avg. Delivery Days",
+        style: {
+          fontSize: "12px",
+          fontWeight: "bold",
+        },
+      },
+    },
     series: [
       {
         name: "Basemap",
@@ -74,7 +90,7 @@ export default function DeliveryTimeBubbleMap({
       },
       {
         type: "mapbubble",
-        name: "Order Locations",
+        name: "Total Orders",
         data: mapData,
         maxSize: "12%",
         minSize: "4%",
@@ -90,7 +106,16 @@ export default function DeliveryTimeBubbleMap({
     ],
   };
   return (
-    <div style={{ position: "relative" }}>
+    <div
+      style={{
+        flex: 1,
+        border: "1px solid #e2e8f0",
+        borderRadius: "12px",
+        overflow: "hidden",
+        backgroundColor: "#f8fafc",
+        position: "relative",
+      }}
+    >
       <HighchartsReact
         highcharts={Highcharts}
         constructorType={"mapChart"}
