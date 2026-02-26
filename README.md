@@ -67,30 +67,36 @@ Dane dzieliłem na państwa, a przy odpowiednim przybliżeniu jeden krajowy bąb
 
 ### Wymagania wstępne
 
-- **Node.js** (wersja 18 lub nowsza)
+- **Node.js** (wersja 22 lub nowsza)
 - menedżer pakietów **npm**
+
 
 ### Instalacja
 
 1. Sklonuj repozytorium
 
 ```
-git clone https://github.com/jkotara123/blacklabel-recruitment-jkotara123.git
+git clone <adres repozytorium>
 
-cd blacklabel-recruitment-jkotara123/ecommerce-dashboard
+```
+lub pobierz jako zip i rozpakuj
+
+2. Przejdź do katalogu aplikacji `ecommerce-dashboard`
+```
+cd <nazwa folderu z repozytorium>/ecommerce-dashboard
 ```
 
-2. Zainstaluj zależności
+3. Zainstaluj zależności
 
 ```
 npm install
 ```
 
-3. Uruchom aplikację w trybie deweloperskim
+4. Uruchom aplikację w trybie deweloperskim
 
 ```
 npm run dev
 ```
 
-4. Otwórz aplikację
-   Aplikacja powinna być dostępna pod adresem: http://localhost:5173 lub http://localhost:3000. (Upewnij się, że inne projekty nie są uruchomione)
+5. Otwórz aplikację
+   Aplikacja powinna być dostępna pod adresem http://localhost:5173 . (Upewnij się, że inne projekty nie są uruchomione)
