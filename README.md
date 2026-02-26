@@ -15,9 +15,9 @@ Z danych dostarczonych wraz z zadaniem skupiłem się na następujących cechach
 
 Do pierwszych trzech będę się odnosił jako **metryki sprzedaży**.
 
-Warto dodać, że dostarczone dane są wyjątkowo małą próbką większych danych. Wybierając wykresy normalnie sprawdzałbym zależności w danych oraz przedstawiał jedynie te wnoszące nieoczywiste informacje. Dobierając więc je w tym przypadku postawiłem na takie wykresy, które sprawdziłyby się wizualnie też na większych danych, a jednocześnie mogłyby być podstawą do analiz. Każdy wykres korzysta też z znacznie innego zestawu informacji - specjalnie dobrałem je w taki sposób, aby pokryć i dobrze zwizualizować złożoność i możliwości danych.
+Warto dodać, że dostarczone dane są wyjątkowo małą próbką większych danych. Wybierając wykresy, normalnie sprawdzałbym zależności między danymi oraz przedstawiał jedynie te wnoszące nieoczywiste informacje. Tutaj postawiłem na takie wykresy, które sprawdziłyby się wizualnie też na większych danych, a jednocześnie mogłyby być podstawą do analiz. Każdy wykres korzysta z różnych zestawów informacji - specjalnie dobrałem je w taki sposób, aby pokryć i dobrze zwizualizować złożoność i możliwości danych.
 
-Dostarczone dane też były w pewien sposób nieokreślone i wymagały dokonania pewnych założeń:
+Dostarczone dane były w pewien sposób nieokreślone i wymagały dokonania pewnych założeń:
 
 - jeden obiekt w liście `orders` jest jedynie fragmentem całego zamówienia jednoznacznie identyfikowanego przez orderId,
 - wszystkie obiekty należące do jednego pełnego zamówienia dzielą lokalizację, czas zamówienia i dostawy, typ klienta, ...,
@@ -27,7 +27,7 @@ Dostarczone dane też były w pewien sposób nieokreślone i wymagały dokonania
 
 Założenia te są kluczowe do poprawnego zliczania danych (w szczególności liczby zamówień) oraz przedstawiania ich na wykresie (lepiej jakby nie było 300 kolumn obok siebie...).
 
-W celu sprawdzenia działania moich wykresów napisałem też sobie prosty generator danych (`scripts/generate-data.js`). Generuje od dane zgodne z moimi założeniami, ale w dowolnej liczbie - nie tylko 10.
+W celu sprawdzenia działania moich wykresów napisałem też sobie prosty generator danych (`scripts/generate-data.js`). Generuje on dane zgodne z moimi założeniami, ale w dowolnej liczbie - nie tylko 10.
 
 ## Wykresy
 
