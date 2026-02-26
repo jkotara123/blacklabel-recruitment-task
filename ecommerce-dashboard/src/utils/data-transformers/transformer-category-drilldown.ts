@@ -10,42 +10,44 @@ export const transformByCategoryDrilldown = (
   orders: Order[],
 ): DrilldownChartData => {
   const categoriesMap: CategoryDrilldownData = orders.reduce((acc, order) => {
-    const cat = order.category;
-    const sub = order.subcategory;
-    const val = {
-      revenue: order.unitPrice * order.quantity,
-      totalOrders: 1,
-      totalItems: order.quantity,
-    };
-
-    if (!acc[cat]) {
-      acc[cat] = {
-        revenue: 0,
-        totalOrders: 0,
-        totalItems: 0,
-        subcategories: {},
+    order.items.forEach((item) => {
+      const cat = item.category;
+      const sub = item.subcategory;
+      const val = {
+        revenue: item.unitPrice * item.quantity,
+        totalItems: item.quantity,
       };
-    }
 
-    if (!acc[cat].subcategories[sub]) {
-      acc[cat].subcategories[sub] = {
-        revenue: 0,
-        totalOrders: 0,
-        totalItems: 0,
-      };
-    }
+      if (!acc[cat]) {
+        acc[cat] = {
+          revenue: 0,
+          totalOrders: new Set<string>(),
+          totalItems: 0,
+          subcategories: {},
+        };
+      }
 
-    acc[cat].revenue += val.revenue;
-    acc[cat].totalOrders += val.totalOrders;
-    acc[cat].totalItems += val.totalItems;
+      if (!acc[cat].subcategories[sub]) {
+        acc[cat].subcategories[sub] = {
+          revenue: 0,
+          totalOrders: new Set<string>(),
+          totalItems: 0,
+        };
+      }
 
-    // Sumujemy dla subkategorii
-    acc[cat].subcategories[sub].revenue += val.revenue;
-    acc[cat].subcategories[sub].totalOrders += val.totalOrders;
-    acc[cat].subcategories[sub].totalItems += val.totalItems;
+      acc[cat].revenue += val.revenue;
+      acc[cat].totalItems += val.totalItems;
+      acc[cat].subcategories[sub].revenue += val.revenue;
+      acc[cat].subcategories[sub].totalItems += val.totalItems;
+
+      (acc[cat].totalOrders as unknown as Set<string>).add(order.orderId);
+      (acc[cat].subcategories[sub].totalOrders as unknown as Set<string>).add(
+        order.orderId,
+      );
+    });
 
     return acc;
-  }, {} as CategoryDrilldownData);
+  }, {} as any);
 
   const sortedCategoryEntries = Object.entries(categoriesMap).sort(
     ([, a], [, b]) => b.revenue - a.revenue,
@@ -57,14 +59,13 @@ export const transformByCategoryDrilldown = (
       y: data.revenue,
       drilldown: name,
       revenue: data.revenue,
-      totalOrders: data.totalOrders,
+      totalOrders: (data.totalOrders as unknown as Set<string>).size,
       totalItems: data.totalItems,
     }),
   );
 
   const drilldownSeries: DrilldownSeries[] = sortedCategoryEntries.map(
     ([catName, catData]) => {
-      // Subkategorie też warto posortować malejąco
       const sortedSubEntries = Object.entries(catData.subcategories).sort(
         ([, a], [, b]) => b.revenue - a.revenue,
       );
@@ -74,7 +75,9 @@ export const transformByCategoryDrilldown = (
         data: sortedSubEntries.map(([subName, subData]) => ({
           name: subName,
           y: subData.revenue,
-          ...subData,
+          revenue: subData.revenue,
+          totalItems: subData.totalItems,
+          totalOrders: (subData.totalOrders as unknown as Set<string>).size,
         })),
       };
     },

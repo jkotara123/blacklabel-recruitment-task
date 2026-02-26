@@ -30,9 +30,9 @@ export const transformByCustomerType = (
         };
       }
 
-      acc[timestamp][type].revenue += order.unitPrice * order.quantity;
+      acc[timestamp][type].revenue += order.totalPrice;
       acc[timestamp][type].totalOrders += 1;
-      acc[timestamp][type].totalItems += order.quantity;
+      acc[timestamp][type].totalItems += order.totalQuantity;
 
       return acc;
     },

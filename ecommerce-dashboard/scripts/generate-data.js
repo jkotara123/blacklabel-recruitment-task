@@ -130,7 +130,7 @@ function generateData(count = 1000) {
           ? "new"
           : quantity === 3
             ? "returning"
-            : CUSTOMER_TYPES[Math.floor(Math.random() * CUSTOMER_TYPES.length)];
+            : "new";
 
     orders.push({
       orderId: `ORD-${10000 + i}`,

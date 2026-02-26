@@ -174,42 +174,6 @@
       "customerType": "returning",
       "device": "desktop",
       "deliveryDays": 2
-    },
-
-    {
-      "orderId": "ORD-2010",
-      "timestamp": "2024-10-07T16:00:00Z",
-      "country": "PL",
-      "city": "Krakow",
-      "lat": 50.0647,
-      "lon": 19.945,
-      "category": "Electronics",
-      "subcategory": "Gaming",
-      "product": "Game Controller",
-      "quantity": 2,
-      "unitPrice": 69.99,
-      "paymentMethod": "card",
-      "customerType": "returning",
-      "device": "desktop",
-      "deliveryDays": 2
-    },
-
-    {
-      "orderId": "ORD-2010",
-      "timestamp": "2024-10-07T15:00:00Z",
-      "country": "PL",
-      "city": "Krakow",
-      "lat": 50.0647,
-      "lon": 19.945,
-      "category": "Electronics",
-      "subcategory": "Gaming",
-      "product": "Game Controller",
-      "quantity": 2,
-      "unitPrice": 69.99,
-      "paymentMethod": "card",
-      "customerType": "returning",
-      "device": "desktop",
-      "deliveryDays": 2
     }
   ]
 }

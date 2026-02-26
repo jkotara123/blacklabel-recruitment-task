@@ -22,9 +22,9 @@ export const transformMapData = (
         };
       }
 
-      acc[metric].revenue += order.unitPrice * order.quantity;
+      acc[metric].revenue += order.totalPrice;
       acc[metric].totalOrders += 1;
-      acc[metric].totalItems += order.quantity;
+      acc[metric].totalItems += order.totalQuantity;
       acc[metric].totalDeliveryDays += order.deliveryDays;
       acc[metric].latSum += order.lat;
       acc[metric].lonSum += order.lon;

@@ -41,9 +41,9 @@ const selectStyle = {
 export default function Dashboard() {
   const [timeRange, setTimeRange] = useState<TimeRange>("month");
   const [dataSource, setDataSource] = useState("generated-data.json");
-  const { data, loading } = useOrderData(dataSource);
+  const { orderData, loading } = useOrderData(dataSource);
 
-  if (loading || !data) {
+  if (loading || !orderData) {
     return (
       <div
         style={{
@@ -129,8 +129,8 @@ export default function Dashboard() {
           style={{ ...cardStyle, gridArea: "customer", minHeight: "400px" }}
         >
           <CustomerChart
-            orders={data.orders}
-            currency={data.meta.currency}
+            orders={orderData.orders}
+            currency={orderData.currency}
             timeRange={timeRange}
           />
         </section>
@@ -139,8 +139,8 @@ export default function Dashboard() {
           style={{ ...cardStyle, gridArea: "column", minHeight: "400px" }}
         >
           <CategoryDrilldownChart
-            orders={data.orders}
-            currency={data.meta.currency}
+            orders={orderData.orders}
+            currency={orderData.currency}
             timeRange={timeRange}
           />
         </section>
@@ -153,8 +153,8 @@ export default function Dashboard() {
           }}
         >
           <DeliveryTimeBubbleMap
-            orders={data.orders}
-            currency={data.meta.currency}
+            orders={orderData.orders}
+            currency={orderData.currency}
             timeRange={timeRange}
           />
         </section>
